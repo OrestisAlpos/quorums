@@ -1,10 +1,21 @@
 from functools import reduce
-from set_cover import set_cover_fixed_param_algorithm
+from setcover import set_cover_fixed_param_algorithm
 
 
 def checkQ3(universe, failProneSystem): #universe is a set. failProneSystem is a list of sets
     (threeSetsExist, solutionSets) = set_cover_fixed_param_algorithm(set(universe), failProneSystem, 3) 
     return (not threeSetsExist, solutionSets)
+
+def checkQ3brute(universe, failProneSystem): #universe is a set. failProneSystem is a list of sets
+    threeSetUnion = threeUnion(failProneSystem)
+    for f in threeSetUnion:
+        if f == universe:
+            print(f)
+    return not any(f == universe for f in threeSetUnion)
+ 
+
+
+
 
 def getGuild(universe, failProneSystems, actualFailedSet): #failProneSystems is a dict str (name of process) -> frozenset of frozensets (failProneSet of process)
     # First, make a pass of the universe to find the correct processes
@@ -18,8 +29,7 @@ def getGuild(universe, failProneSystems, actualFailedSet): #failProneSystems is 
     # TODO: Find the guild
     # IDEA: Define Naive processes recursively (closure):
     # pk is i-Naive if every Q in Qk contains at least one (i-1)-Naive, Where 0-Naive are the failed processes
-    # Then, the correct processes will be the Universe minus all the i-Naive. In this set of correct processes one has to search for a guild
-        
+    # Then, the correct processes will be the Universe minus all the i-Naive. In this set of correct processes one has to search for a guild      
     return correctWise
 
 def failProneSystemContaisActualFailedSet(failProneSystem, actualFailedSet): # failProneSystem is frozenset of frozensets 
@@ -28,13 +38,6 @@ def failProneSystemContaisActualFailedSet(failProneSystem, actualFailedSet): # f
             return True
     return False
 
-def Q3_brute(universe, failProneSystem): #universe is a set. failProneSystem is a list of sets
-    threeSetUnion = threeUnion(failProneSystem)
-    for f in threeSetUnion:
-        if f == universe:
-            print(f)
-    return not any(f == universe for f in threeSetUnion)
- 
 def threeUnion(setSystem): # returns all sets derived as the union of any three sets from the parameter list of sets
     for i in range(0, 3 - len(setSystem)): # make it work with less than 3 elements
         setSystem.append(frozenset())

@@ -2,38 +2,6 @@ import json
 import itertools
 import functools 
 
-def parseThresholdDescription(confTitle):  #Returns frozenset of frozensets
-    jsonString = ""
-    with open('config.json', 'r') as conf:
-        jsonString = json.loads(conf.read())
-    systemDescription = jsonString[confTitle]
-    return systemDescription[0][0]
-
-def parseJson(confTitle):  #Returns frozenset of frozensets
-    jsonString = ""
-    with open('config.json', 'r') as conf:
-        jsonString = json.loads(conf.read())
-    systemDescription = jsonString[confTitle]
-    #systemDescription is a list of lists: each systemDescription[i] describes Fi in F.
-    setsParsed = list()
-    for description in systemDescription:
-        setsParsed.append(parseSetsFromDescription(description))
-    return frozenset().union(*setsParsed)    
-
-def parseJsonAsym(confTitle):  #Returns a dict str (name of process) -> frozenset of frozensets (failProneSet of process)
-    jsonString = ""
-    with open('config.json', 'r') as conf:
-        jsonString = json.loads(conf.read())
-    systemDescription = jsonString[confTitle]
-    #systemDescription is a list of lists: each systemDescription[i] describes Fi, whic is the FailProneSystem of process i
-    setsParsed = list()
-    for description in systemDescription:
-        setsParsed.append(parseSetsFromDescription(description))
-    res = {}
-    for i in range(len(setsParsed)):
-        res[str(i + 1)] = setsParsed[i]
-    return res  
-
 def parseSetsFromDescription(description):
     if (len(description) == 1) & (type(description[0]) == dict):
         return parseSetsFromThresholdDescription(description[0])

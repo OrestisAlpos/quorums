@@ -1,4 +1,5 @@
-from util import parseSetsFromThresholdDescription, parseSetsFromDescription, parseJson
+from parserutil import parseSetsFromThresholdDescription, parseSetsFromDescription
+from parser import parseJson
 from math import factorial
 
 def cc(n, r):

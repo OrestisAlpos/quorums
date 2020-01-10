@@ -1,6 +1,7 @@
-from parserutil import parseSetsFromThresholdDescription, parseSetsFromDescription
-from parser import parseJson
+from BSC.parser.parserutil import parseSetsFromThresholdDescription, parseSetsFromDescription
+from BSC.parser.jsonparser import parseJson, parseJsonAsym, parseJsonAsymToBitmap, parseAsymFailProneSystemAsBitmap, parseAsymFailProneSystem
 from math import factorial
+from pyroaring import BitMap
 
 def cc(n, r):
     return factorial(n) // factorial(r) // factorial(n-r)
@@ -104,5 +105,160 @@ def test_parseJson():
     assert(parseJson("F9") == frozenset({frozenset({2, 4}), frozenset({1, 4}), frozenset({1, 3}), frozenset({2, 3})}))
     return True
 
+def test_parseJsonAsym():
+    assert(parseAsymFailProneSystem("CT19Example1")[1] == {
+        1: frozenset({frozenset({3}),
+            frozenset({2}),
+            frozenset({4}),
+            frozenset({5})}),
+        2: frozenset({frozenset({3}),
+            frozenset({1}),
+            frozenset({4}),
+            frozenset({5})}),
+        3: frozenset({frozenset({2, 4}),
+            frozenset({1, 4}),
+            frozenset({1, 5}),
+            frozenset({2, 5})}),
+        4: frozenset({frozenset({3}),
+            frozenset({2}),
+            frozenset({1}),
+            frozenset({5})}),
+        5: frozenset({frozenset({2, 4})})
+        })
+    assert(parseAsymFailProneSystem("CT19Example2")[1] == {
+        1: frozenset({frozenset({2, 4, 6}),
+            frozenset({4, 5, 6}),
+            frozenset({2, 5, 6})}),
+        2: frozenset({frozenset({3, 4, 6}),
+            frozenset({4, 5, 6}),
+            frozenset({3, 5, 6})}),
+        3: frozenset({frozenset({4, 5, 6}),
+            frozenset({1, 5, 6}),
+            frozenset({1, 4, 6})}),
+        4: frozenset({frozenset({1, 6}),
+            frozenset({5, 6}),
+            frozenset({3, 6}),
+            frozenset({2, 6})}),
+        5: frozenset({frozenset({1, 6}),
+            frozenset({3, 6}),
+            frozenset({4, 6}),
+            frozenset({2, 6})}),
+        6: frozenset({frozenset({1, 4}),
+            frozenset({1, 3}),
+            frozenset({1, 2}),
+            frozenset({1, 5})})
+        })
+    return True
+
+def test_parseJsonAsymToBitmap():
+    assert(parseAsymFailProneSystemAsBitmap("CT19Example1")[1] == {
+        1:[BitMap([2]),
+            BitMap([3]),
+            BitMap([4]),
+            BitMap([5])],
+        2:[BitMap([1]),
+            BitMap([3]),
+            BitMap([4]),
+            BitMap([5])],
+        3:[BitMap([1, 4]),
+            BitMap([1, 5]),
+            BitMap([2, 4]),
+            BitMap([2, 5])],
+        4:[BitMap([1]),
+            BitMap([2]),
+            BitMap([3]),
+            BitMap([5])],
+        5:[BitMap([2, 4])]
+        })
+    assert(parseAsymFailProneSystemAsBitmap("CT19Example2")[1] == {
+        1:[BitMap([2, 4, 6]),
+            BitMap([2, 5, 6]),
+            BitMap([4, 5, 6])],
+        2:[BitMap([3, 4, 6]),
+            BitMap([3, 5, 6]),
+            BitMap([4, 5, 6])],
+        3:[BitMap([1, 4, 6]),
+            BitMap([1, 5, 6]),
+            BitMap([4, 5, 6])],
+        4:[BitMap([1, 6]),
+            BitMap([2, 6]),
+            BitMap([3, 6]),
+            BitMap([5, 6])],
+        5:[BitMap([1, 6]),
+            BitMap([2, 6]),
+            BitMap([3, 6]),
+            BitMap([4, 6])],
+        6:[BitMap([1, 2]),
+            BitMap([1, 3]),
+            BitMap([1, 4]),
+            BitMap([1, 5])]
+        })
+    return True
+
+def test_parseExplicitJsonAsym():
+    assert(parseAsymFailProneSystem("CT19Example1Explicit")[1] == {
+        1: frozenset({frozenset({3}),
+            frozenset({2}),
+            frozenset({4}),
+            frozenset({5})}),
+        2: frozenset({frozenset({3}),
+            frozenset({1}),
+            frozenset({4}),
+            frozenset({5})}),
+        3: frozenset({frozenset({2, 4}),
+            frozenset({1, 4}),
+            frozenset({1, 5}),
+            frozenset({2, 5})}),
+        4: frozenset({frozenset({3}),
+            frozenset({2}),
+            frozenset({1}),
+            frozenset({5})}),
+        5: frozenset({frozenset({2, 4})})
+        })
+    return True
+
+def test_parseExplicitJsonAsymToBitmap():
+    assert(parseAsymFailProneSystemAsBitmap("CT19Example1Explicit")[1] == {
+        1:[BitMap([2]),
+            BitMap([3]),
+            BitMap([4]),
+            BitMap([5])],
+        2:[BitMap([1]),
+            BitMap([3]),
+            BitMap([4]),
+            BitMap([5])],
+        3:[BitMap([1, 4]),
+            BitMap([1, 5]),
+            BitMap([2, 4]),
+            BitMap([2, 5])],
+        4:[BitMap([1]),
+            BitMap([2]),
+            BitMap([3]),
+            BitMap([5])],
+        5:[BitMap([2, 4])]
+        })
+    assert(parseAsymFailProneSystemAsBitmap("CT19Example2Version2Explicit")[1] == {
+        1:[BitMap([2, 4, 6]),
+            BitMap([2, 5, 6]),
+            BitMap([4, 5, 6])],
+        2:[BitMap([3, 4, 6]),
+            BitMap([3, 5, 6]),
+            BitMap([4, 5, 6])],
+        3:[BitMap([1, 4, 6]),
+            BitMap([1, 5, 6]),
+            BitMap([4, 5, 6])],
+        4:[BitMap([1, 6]),
+            BitMap([2, 6]),
+            BitMap([3, 6]),
+            BitMap([5, 6])],
+        5:[BitMap([1, 6]),
+            BitMap([2, 6]),
+            BitMap([3, 6]),
+            BitMap([4, 6])],
+        6:[BitMap([1, 3])]
+        })
+    return True
+
 def runAll():
-    return test_ParseSetsFromThresholdDescription() | test_ParseSetsFromDescription() | test_parseJson() | test_ParseSetsFromThresholdDescriptionWithNested()
+    return test_ParseSetsFromThresholdDescription() | test_ParseSetsFromDescription() | test_parseJson() | test_ParseSetsFromThresholdDescriptionWithNested()\
+         | test_parseJsonAsym() | test_parseJsonAsymToBitmap() | test_parseExplicitJsonAsym() | test_parseExplicitJsonAsymToBitmap()

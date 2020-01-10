@@ -22,7 +22,7 @@ def parseStellarQuorumSystem(stellarConfigFile):
     for stellarValidator in (stellarValidator for stellarValidator in stellarConfigFile if stellarValidator['isValidator'] == True):
         validatorPubKey = stellarValidator['publicKey']
         validatorQuorumSet = parseQuorumSet(stellarValidator['quorumSet'])
-        asymQuorumSystem.append({'PubKey' : validatorPubKey, 'FailProneSet' : validatorQuorumSet})
+        asymQuorumSystem.append({'PubKey' : validatorPubKey, 'FailProneSystem' : {}, 'QuorumSystem' : validatorQuorumSet})
     return asymQuorumSystem
 
 def parseQuorumSet(quorumSet):
@@ -32,3 +32,24 @@ def parseQuorumSet(quorumSet):
     for innerQuorumSet in innerQuorumSets:
         validators.append(parseQuorumSet(innerQuorumSet))
     return {'select': threshold, 'out-of': validators}
+
+def setIntegerIdsForPubKeys(confFile):
+    systemDescription = ""
+    with open(confFile, 'r') as conf:
+        systemDescription = json.loads(conf.read())
+    res = {}
+    counter = 1
+    for processDescription in systemDescription:
+        res[processDescription['PubKey']] = counter
+        counter += 1
+
+    f = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "integer-keys.json"), "w")
+    f.write(json.dumps(res, indent=2, separators=(',', ': ')))
+    f.close()
+    print("Successfully written integer-keys.json")
+
+def getIntegerIdsForPubKeys(pubKey):
+    integerKeys = ""
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'integer-keys.json'), 'r') as conf:
+        integerKeys = json.loads(conf.read())
+    return integerKeys[pubKey]

@@ -18,23 +18,27 @@ def checkQ3brute(universe, failProneSystem): #universe is a set. failProneSystem
 
 
 def getGuild(universe, failProneSystems, actualFailedSet): #failProneSystems is a dict str (name of process) -> frozenset of frozensets (failProneSet of process)
-    # First, make a pass of the universe to find the correct processes
-    correct = universe.difference(actualFailedSet)
-    # Second, make a pass of the universe and the failProneSystem of each process to find the correct and wise processes.
-    correctWise = list(filter(lambda p: failProneSystemContaisActualFailedSet(failProneSystems[str(p)], actualFailedSet), correct))
-    # Third, we have the set of correct and wise procs. Keep only those that have a quorum in this set.
-    # Maybe you can find a better algorithm for this than taking the Quorums of every proc and checking if at least one is in the set of correct and wise
-    # Maybe you could use the threshold definition, first check top layer, there might be an early stop there, etc...
-    return correctWise
-    # TODO: Find the guild
-    # IDEA: Define Naive processes recursively (closure):
-    # pk is i-Naive if every Q in Qk contains at least one (i-1)-Naive, Where 0-Naive are the failed processes
-    # Then, the correct processes will be the Universe minus all the i-Naive. In this set of correct processes one has to search for a guild      
-    return correctWise
+    (kFaultyProcesses, allFaultyProcessess) = getAllRecursiveFaultyProcesses(universe, failProneSystems, actualFailedSet)
+    return (kFaultyProcesses, allFaultyProcessess)
+    #return universe.difference(allFaultyProcessess)
 
-def failProneSystemContaisActualFailedSet(failProneSystem, actualFailedSet): # failProneSystem is frozenset of frozensets 
+def getAllRecursiveFaultyProcesses(universe, failProneSystems, actualFailedSet):
+    kFaultyProcesses = list() #Each faultyProcesses[k] is the set of all k-faulty processes
+    allFaultyProcessess = frozenset()
+    newFaultyProcesses = actualFailedSet
+    while len(newFaultyProcesses) > 0:
+        kFaultyProcesses.append(newFaultyProcesses)
+        allFaultyProcessess = allFaultyProcessess.union(newFaultyProcesses)
+        newFaultyProcesses = getRecursiveFaultyProcesses(universe, failProneSystems, allFaultyProcessess)
+    return (kFaultyProcesses, allFaultyProcessess)
+
+def getRecursiveFaultyProcesses(universe, failProneSystems, previousFaultyProcesses):
+    correct = universe.difference(previousFaultyProcesses)
+    return frozenset(filter(lambda p: not failProneSystemContainsSet(failProneSystems[str(p)], previousFaultyProcesses), correct))
+
+def failProneSystemContainsSet(failProneSystem, setToFind): # failProneSystem is frozenset of frozensets 
     for failProneSet in failProneSystem:
-        if failProneSet.issuperset(actualFailedSet):
+        if failProneSet.issuperset(setToFind):
             return True
     return False
 

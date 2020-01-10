@@ -115,6 +115,23 @@
 
     "LcwExample":[
        [{"select": 2, "out-of": [ {"select": 2, "out-of":["A","B","C"]} , {"select": 2, "out-of":["D","E","F"]}  , {"select": 2, "out-of":["G","H", {"select": 3, "out-of":["I","J","K","L"]} ]} ]}]
-       ]
+       ],
 
+
+
+       
+"LcwExample2":[
+       {"PubKey":"1", 
+        "FailProneSet": {"select": 2, "out-of": [{"select": 2, "out-of":["A","B","C"]}, 
+                                                 {"select": 2, "out-of":["D","E","F"]},
+                                                 {"select": 2, "out-of":["G","H", {"select": 3, "out-of":["I","J","K","L"]} ]}
+                                                ]}
+       },
+       {"PubKey":"2", 
+       "FailProneSet": {"select": 2, "out-of": [{"select": 2, "out-of":["A","B","C"]}, 
+                                                {"select": 2, "out-of":["D","E","F"]},
+                                                {"select": 2, "out-of":["G","H", {"select": 3, "out-of":["I","J","K","L"]} ]}
+                                               ]}
+       }
+]
 }

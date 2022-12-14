@@ -1,0 +1,10 @@
+
+{"select": 3, "out-of": [ 
+    {"select": 2, "out-of":["A0", {"select": 2, "out-of":["B0", "B1", "B2", "B3"]} ]}, 
+    {"select": 2, "out-of":["A1", {"select": 2, "out-of":["B3", "B4", "B5", "B6"]} ]}, 
+    {"select": 2, "out-of":["A2", {"select": 2, "out-of":["B6", "B7", "B8", "B9"]} ]}, 
+    {"select": 2, "out-of":["A3", {"select": 2, "out-of":["B9", "B10", "B11", "B1"]} ]}
+]}
+
+
+ 

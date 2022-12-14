@@ -2,7 +2,7 @@ import numpy as np
 from scipy import linalg
 import sympy
 import random
-import parser
+import Quorums.parser.jsonparser as parser
 
 # M,rho describe the MSP, such as: M, rho = msputil.getMSP(accessStructureTitle)
 # accesGroup is a list that describes the players that try to reconstruct the secret, such as: accessGroup = ['A', 'B', 'D', 'E']
@@ -97,7 +97,7 @@ def recombineShares(m, shares_a, l_a):
 #Returns: An MSP tuple (MSP matrix and owner list, which maps each matrix row to a player)
 def getMSP(confTitle):
     M = getVandermonde(1,1)
-    L = parser.parseDescriptionString(confTitle)[0]
+    L = parser.parseJsonAsString(confTitle)[0]
     nextInsertionIndex = 0
     while (nextInsertionIndex >= 0):
         nextInsertion = L.pop(nextInsertionIndex)

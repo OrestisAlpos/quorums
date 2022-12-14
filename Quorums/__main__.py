@@ -1,5 +1,5 @@
-import BSC.checker.checker as checker
-import BSC.parser.jsonparser as jsonparser
+import Quorums.checker.checker as checker
+import Quorums.parser.jsonparser as jsonparser
 import os
 
 # run this file with python -m BSC

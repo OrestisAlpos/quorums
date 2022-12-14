@@ -1,10 +1,10 @@
 from pyroaring import BitMap
 import time
 import copy
-import BSC.parser.parserutil as parserutil
-import BSC.parser.bitmapparserutil as bitmapparserutil
-import BSC.checker.checker as checker
-import BSC.parser.jsonparser as jsonparser
+import Quorums.parser.parserutil as parserutil
+import Quorums.parser.bitmapparserutil as bitmapparserutil
+import Quorums.checker.checker as checker
+import Quorums.parser.jsonparser as jsonparser
 
 def test_stellarWithBitMap():
     print('BitMap:')

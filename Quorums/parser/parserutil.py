@@ -51,7 +51,7 @@ def getUniverseAsym(setSystems): #setSystems is a dict str (name of process) -> 
     return nodes
 
 def getComplement(universe, setSystem):
-    return frozenset(frozenset(universe.difference(s)) for s in setSystem)
+    return list(frozenset(universe.difference(s)) for s in setSystem)
 
 def getComplementAsym(universe, setSystems): #setSystems is a dict str (name of process) -> frozenset of frozensets (failProneSet of process)
     res = {}

@@ -1,0 +1,12 @@
+{  "select": 6,
+   "out-of": [
+      {"select": 2, "out-of": ["Blockdaemon1", "Blockdaemon2", "Blockdaemon3"]},
+      {"select": 2, "out-of": ["SDF1", "SDF2", "SDF3"]},
+      {"select": 2, "out-of": ["WirexSingapore", "WirexUK", "WirexUS"]},
+      {"select": 2, "out-of": ["CoinqvestFinland", "CoinqvestHongKong", "CoinqvestGermany"]},
+      {"select": 2, "out-of": ["SatoshiPayUS", "SatoshiPaySG", "SatoshiPayDE"]},
+      {"select": 2, "out-of": ["FranklinTempleton1", "FranklinTempleton2", "FranklinTempleton3"]},
+      {"select": 3, "out-of": ["LOBSTR1", "LOBSTR2", "LOBSTR3", "LOBSTR4", "LOBSTR5"]},
+      {"select": 2, "out-of": ["Hercules", "Lyra", "Boötes"]}
+]}
+

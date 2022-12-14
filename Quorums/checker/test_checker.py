@@ -1,4 +1,4 @@
-import BSC.checker.checker as checker
+import Quorums.checker.checker as checker
 import itertools
 from pyroaring import BitMap
 import time

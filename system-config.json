@@ -354,12 +354,50 @@
       ],
 
       "Zanolini":[
-        {"PubKey" : "1", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":[2,4,5]}, 6, 7]} },
-        {"PubKey" : "2", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":[3,4,5]}, 6, 7]} },
-        {"PubKey" : "3", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":[1,4,5]}, 6, 7]} },
-        {"PubKey" : "4", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 1, "out-of":[1,2,3,5]}, 6, 7]} },
-        {"PubKey" : "5", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 1, "out-of":[1,2,3,4]}, 6, 7]} },
-        {"PubKey" : "6", "FailProneSystem": [1,3,7]  },
-        {"PubKey" : "7", "FailProneSystem": [3,4,5]  }
-        ]
-    }
+        {"PubKey" : "1", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":["2","4","5"]}, "6", "7"]} },
+        {"PubKey" : "2", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":["3","4","5"]}, "6", "7"]} },
+        {"PubKey" : "3", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":["1","4","5"]}, "6", "7"]} },
+        {"PubKey" : "4", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 1, "out-of":["1","2","3","5"]}, "6", "7"]} },
+        {"PubKey" : "5", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 1, "out-of":["1","2","3","4"]}, "6", "7"]} },
+        {"PubKey" : "6", "FailProneSystem": ["1","3","7"]  },
+        {"PubKey" : "7", "FailProneSystem": ["3","4","5"]  }
+        ],
+  
+    "ZanoliniNew": [
+      {"PubKey": "p_1", "FailProneSystem": {"select": 1, "out-of": ["p_2", "p_4"] } },
+      {"PubKey": "p_2", "FailProneSystem": {"select": 1, "out-of": ["p_3", "p_4"] } },
+      {"PubKey": "p_3", "FailProneSystem": {"select": 1, "out-of": ["p_1", "p_4"] } },
+      {"PubKey": "p_4", "FailProneSystem": {"select": 1, "out-of": ["p_1", "p_2", "p_3"] } }
+    ],
+
+    "ZanoliniWithN2andN3":[
+      {"PubKey" : "1", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":["2","4","5"]}, "6", "7"]} },
+      {"PubKey" : "2", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":["3","4","5"]}, "6", "7"]} },
+      {"PubKey" : "3", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 2, "out-of":["1","4","5"]}, "6", "7"]} },
+      {"PubKey" : "4", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 1, "out-of":["1","2","3","5"]}, "6", "7"]} },
+      {"PubKey" : "5", "FailProneSystem": {"select" : 3, "out-of" : [{"select": 1, "out-of":["1","2","3","4"]}, "6", "7"]} },
+      {"PubKey" : "6", "FailProneSystem": ["1","3","7"]  },
+      {"PubKey" : "7", "FailProneSystem": ["3","4","5"]  },
+      {"PubKey" : "8", "FailProneSystem": ["4","5","6"]  }
+      ],
+    
+    
+
+    "StrangersBlogAsym1": [ 
+      {"PubKey": "1", "FailProneSystem": {"select": 1, "out-of": [3, 4, 5] }},
+      {"PubKey": "2", "FailProneSystem": {"select": 1, "out-of": [3, 4, 5] }},
+      {"PubKey": "3", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[1,2]}, 4, 5] }},
+      {"PubKey": "4", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[1,2]}, 3, 5] }},
+      {"PubKey": "5", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[1,2]}, 3, 4] }},
+      {"PubKey": "T", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[1,2]}, 3, 4, 5] }}
+    ],
+
+    "StrangersBlogAsym2": [ 
+      {"PubKey": "1", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[2,5]}, 3, 4] }},
+      {"PubKey": "2", "FailProneSystem": {"select": 1, "out-of": [1, 3, 4] }},
+      {"PubKey": "3", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[2,5]}, 1, 4] }},
+      {"PubKey": "4", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[2,5]}, 1, 3] }},
+      {"PubKey": "5", "FailProneSystem": {"select": 1, "out-of": [1, 3, 4] }},
+      {"PubKey": "T", "FailProneSystem": {"select": 1, "out-of": [{"select": 2, "out-of":[2,5]}, 1, 3, 4] }}
+    ]
+  }

@@ -1,14 +1,14 @@
-import BSC.checker.checker as checker
+import Quorums.checker.checker as checker
 from pyroaring import BitMap
 import time
 import itertools
 import timeit
-import BSC.parser.jsonparser as jsonparser
-import BSC.parser.parserutil as parserutil
-import BSC.parser.bitmapparserutil as bitmapparserutil
+import Quorums.parser.jsonparser as jsonparser
+import Quorums.parser.parserutil as parserutil
+import Quorums.parser.bitmapparserutil as bitmapparserutil
 import os
 import json
-from BSC.setcover.setcover import set_cover_fixed_param_asym_algorithm
+from Quorums.setcover.setcover import set_cover_fixed_param_asym_algorithm
 import copy
 
 """
@@ -222,32 +222,32 @@ def test_timeit():
     for key in configNames:
         print("Testing " + key + " with frozenset:")
         print(timeit.timeit(
-            setup ='import BSC.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport BSC.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystem("' + key + '")', 
+            setup ='import Quorums.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport Quorums.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystem("' + key + '")', 
             stmt = 'checker.checkB3(universe, fps)', 
             number=5000))
 
         print("Testing " + key + " with BitMap:")
         print(timeit.timeit(
-            setup ='import BSC.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport BSC.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystemAsBitmap("' + key + '")', 
+            setup ='import Quorums.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport Quorums.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystemAsBitmap("' + key + '")', 
             stmt = 'checker.checkB3(universe, fps)', 
             number=5000))
         
         print("Testing " + key + " with setcover:")
         print(timeit.timeit(
-            setup ='import BSC.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport BSC.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystem("' + key + '")', 
+            setup ='import Quorums.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport Quorums.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystem("' + key + '")', 
             stmt = 'checker.checkB3withSetCover(universe, fps)', 
             number=5000))
 
         print("Testing " + key + " with BitMap setcover:")
         print(timeit.timeit(
-            setup ='import BSC.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport BSC.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystemAsBitmap("' + key + '")', 
+            setup ='import Quorums.parser.jsonparser as jsonparser \nfrom pyroaring import BitMap \nimport Quorums.checker.checker as checker \n(universe, fps) = jsonparser.parseAsymFailProneSystemAsBitmap("' + key + '")', 
             stmt = 'checker.checkB3withSetCover(universe, fps)', 
             number=5000))
 """
 """
 def test_stellar():
     print(timeit.timeit(
-        setup ='import BSC.parser.jsonparser as jsonparser \nimport BSC.parser.parserutil as parserutil \nfrom pyroaring import BitMap \nimport BSC.checker.checker as checker \n(universe,parsedData) = jsonparser.parseAsymQuorumSystem() \n', 
+        setup ='import Quorums.parser.jsonparser as jsonparser \nimport Quorums.parser.parserutil as parserutil \nfrom pyroaring import BitMap \nimport Quorums.checker.checker as checker \n(universe,parsedData) = jsonparser.parseAsymQuorumSystem() \n', 
         stmt = 'checker.checkB3withSetCover(universe, parsedData)',
         number=1))
 """

@@ -1,8 +1,14 @@
-import BSC.parser.parserutil as parserutil
-import BSC.parser.bitmapparserutil as bitmapparserutil
+import Quorums.parser.parserutil as parserutil
+import Quorums.parser.bitmapparserutil as bitmapparserutil
 import json
 import pyroaring
 import os
+
+def parseSystemFromAbsoluteFilePath(filePath, confTitle):
+    return parseJsonAsym(filePath, confTitle, 'FailProneSystem')
+
+def parseSystemFromAbsoluteFilePathAsBitmap(filePath, confTitle):
+    return parseJsonAsymToBitmap(filePath, confTitle, 'FailProneSystem')
 
 def parseAsymFailProneSystem(confTitle):
     return parseJsonAsym(os.path.join(os.path.dirname(__file__), 'config.json'), confTitle, 'FailProneSystem')
@@ -14,15 +20,15 @@ def parseAsymFailProneSystemAsBitmap(confTitle):
     return parseJsonAsymToBitmap(os.path.join(os.path.dirname(__file__), 'config.json'), confTitle, 'FailProneSystem')
 
 def parseAsymQuorumSystemAsBitmap():
-    return parseJsonAsymToBitmap('stellar/stellar.json', confTitle='', specificationToUse='QuorumSystem')
+    return parseJsonAsymToBitmap(os.path.join(os.path.dirname(__file__), '../stellar/stellar_adapted.json'), confTitle='', specificationToUse='QuorumSystem')
 
 # stellar.json includes some pubkeys in the quorum set that don't seem to be part of the universe
 # (they don't seem to have a quorum set themselves). So I had to remove these for the parser to work with integer keys.
 def parseAdaptedAsymQuorumSystemAsBitmap():
-    return parseJsonAsymToBitmap('stellar/stellar_adapted.json', confTitle='', specificationToUse='QuorumSystem')
+    return parseJsonAsymToBitmap(os.path.join(os.path.dirname(__file__), '../stellar/stellar_adapted.json'), confTitle='', specificationToUse='QuorumSystem')
 
 def parseAdaptedAsymQuorumSystem():
-    return parseJsonAsym('stellar/stellar_adapted.json', confTitle='', specificationToUse='QuorumSystem')
+    return parseJsonAsym(os.path.join(os.path.dirname(__file__), '../stellar/stellar_adapted.json'), confTitle='', specificationToUse='QuorumSystem')
 
 
 # Use this to parse a description of a Fail Prone System in the SYMMETRIC trust setting.
@@ -82,6 +88,8 @@ def parseJsonAsymToBitmap(confFile, confTitle = '', specificationToUse = 'FailPr
         else:
             processTrustAssumption = bitmapparserutil.parseBitMapSetsFromThresholdDescription(processDescription[specificationToUse], universe)
         res[universe[processDescription['PubKey']]] = processTrustAssumption
+    #print(len(res[1]))
+    # REMOVE SUBSETS OF SETS FROM LIST???
     return (universe, res)
 
 def parseUniverseFromJsonAsym(confFile, confTitle = '', specificationToUse = 'FailProneSystem'):
@@ -96,5 +104,40 @@ def parseUniverseFromJsonAsym(confFile, confTitle = '', specificationToUse = 'Fa
     for processDescription in systemDescription:
         res.add(processDescription['PubKey'])
     return res
+
+"""these are the same methods as above for both set and bitmap parsing of fail prone systems 
+    but without reading in a system from a config file and instead inputting it as a parameter"""
+
+
+def parseJsonAsymGenerated(systemDescription, specificationToUse = 'FailProneSystem'): 
+    universe = {}
+    
+    for processDescription in systemDescription:
+        universe[processDescription['PubKey']] = processDescription['id']
+    res = {}
+    for processDescription in systemDescription:
+
+        if isinstance(processDescription[specificationToUse], list):
+            processTrustAssumption = parserutil.parseArraysFromThresholdDescription(processDescription[specificationToUse], universe)
+        else:
+            processTrustAssumption = parserutil.parseSetsFromThresholdDescription(processDescription[specificationToUse], universe)
+        res[universe[processDescription['PubKey']]] = processTrustAssumption
+    return (universe, res) 
+
+# returns a tuple of the universe as a key dict and the failpronesystem as a dict
+def parseJsonAsymToBitmapGenerated(systemDescription, specificationToUse = 'FailProneSystem'):
+    universe = {}
+    for processDescription in systemDescription:
+        universe[processDescription['PubKey']] = processDescription['id']
+    res = {}
+    for processDescription in systemDescription:
+        if isinstance(processDescription[specificationToUse], list):
+            processTrustAssumption = bitmapparserutil.parseArraysFromThresholdDescription(processDescription[specificationToUse], universe)
+        else:
+            processTrustAssumption = bitmapparserutil.parseBitMapSetsFromThresholdDescription(processDescription[specificationToUse], universe)
+        res[universe[processDescription['PubKey']]] = processTrustAssumption
+    #print(len(res[1]))
+    # REMOVE SUBSETS OF SETS FROM LIST???
+    return (universe, res)
 
     

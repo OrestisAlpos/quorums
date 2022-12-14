@@ -1,5 +1,5 @@
-from BSC.parser.parserutil import parseSetsFromThresholdDescription, parseSetsFromDescription
-from BSC.parser.jsonparser import parseJson, parseJsonAsym, parseJsonAsymToBitmap, parseAsymFailProneSystemAsBitmap, parseAsymFailProneSystem
+from Quorums.parser.parserutil import parseSetsFromThresholdDescription, parseSetsFromDescription
+from Quorums.parser.jsonparser import parseJson, parseJsonAsym, parseJsonAsymToBitmap, parseAsymFailProneSystemAsBitmap, parseAsymFailProneSystem
 from math import factorial
 from pyroaring import BitMap
 

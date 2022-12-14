@@ -1,11 +1,7 @@
 from functools import reduce
-from setcover import set_cover_fixed_param_algorithm
-
-
-from functools import reduce
 from itertools import chain, combinations
 import sortedcontainers
-from BSC.setcover.setcover import set_cover_fixed_param_algorithm, set_cover_fixed_param_asym_algorithm
+from Quorums.setcover.setcover import set_cover_fixed_param_algorithm, set_cover_fixed_param_asym_algorithm
 import copy
 
 

@@ -1,4 +1,4 @@
-import BSC.setcover.setcover as setcover
+import Quorums.setcover.setcover as setcover
 from pyroaring import BitMap
 
 universe1 = {1,2,3,4}
